@@ -1,13 +1,3 @@
-def progressImg():
-    global num
-    num += 1
-    num = num % 4
-    images2[num].show_image(0)
-
-def on_button_pressed_a():
-    basic.show_number(fastestTime)
-input.on_button_pressed(Button.A, on_button_pressed_a)
-
 timeTaken = 0
 endTime = 0
 startTime = 0
@@ -18,34 +8,49 @@ num = 0
 num = 0
 running = 0
 goImg = images.create_image("""
-    . . . . #
+    # . . . #
+        . # . # .
+        . . # . .
+        . # . # .
         # . . . #
-        # . # . #
-        # . . . #
-        # . . . .
 """)
 Img2 = images.create_image("""
-    . . # # #
-        . . . . #
-        . . # . .
-        # . . . .
-        # # # . .
+    . . . # .
+        # . # . .
+        . # # # .
+        . . # . #
+        . # . . .
 """)
 img3 = images.create_image("""
-    # # # # .
-        . . . . .
+    . . # . .
         . . # . .
-        . . . . .
-        . # # # #
+        # # # # #
+        . . # . .
+        . . # . .
 """)
 img4 = images.create_image("""
-    # # . . .
-        # . . . .
-        # . # . #
-        . . . . #
-        . . . # #
+    . # . . .
+        . . # . #
+        . # # # .
+        # . # . .
+        . . . # .
 """)
 images2 = [goImg, Img2, img3, img4]
+
+def progressImg():
+    global num
+    num += 1
+    num = num % 4
+    images2[num].show_image(0)
+
+def on_button_pressed_a():
+    if fastestTime == 0:
+        basic.show_string("CHEATER")
+    else:
+        basic.show_number(fastestTime)
+input.on_button_pressed(Button.A, on_button_pressed_a)
+
+
 
 def on_forever():
     global start, running, startTime, endTime, timeTaken, fastestTime, num
@@ -57,10 +62,10 @@ def on_forever():
             startTime = input.running_time()
     if input.button_is_pressed(Button.B):
         endTime = input.running_time()
-        timeTaken = endTime - startTime
+        timeTaken = (endTime - startTime) % 1000
         basic.show_number(timeTaken)
         basic.pause(5000)
-        if timeTaken > fastestTime:
+        if timeTaken < fastestTime:
             fastestTime = timeTaken
         num = 0
         running = 0
