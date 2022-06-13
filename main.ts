@@ -1,12 +1,13 @@
 function progressImg () {
-    num = 0
+    num += 1
+    num = num % 3
 }
 let timeTaken = 0
 let endTime = 0
 let startTime = 0
 let start = 0
-let num = 0
 let running = 0
+let num = 0
 num = 0
 let goImg = images.createImage(`
     # # # # #
@@ -45,7 +46,9 @@ basic.forever(function () {
         basic.showNumber(timeTaken)
         basic.pause(5000)
         running = 0
+        num = 0
     } else {
         progressImg()
+        images2[num].showImage(0)
     }
 })
